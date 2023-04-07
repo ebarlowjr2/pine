@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pine Script Editor</title>
+	<script src="https://unpkg.com/@pinecone/pinecone@0.2.0/dist/pinecone.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/@pinecone/pinecone@0.2.0/dist/pinecone.css" />
+</head>
+<body>
+	<div class="pinecone">
+		<h1>Pine Script Editor</h1>
+		<p>Create custom indicators, strategies, and alerts with Pine Script.</p>
+		<form id="pine-form">
+			<label for="pine-script">Enter your Pine Script:</label>
+			<textarea id="pine-script" name="pine-script"></textarea>
+			<button type="submit">Run Script</button>
+		</form>
+		<div id="pine-output"></div>
+	</div>
+	<script>
+		// Define form submission event handler
+		document.querySelector('#pine-form').addEventListener('submit', function(event) {
+			event.preventDefault();
+			// Get the Pine Script from the form
+			const pineScript = document.querySelector('#pine-script').value;
+			// Compile and run the Pine Script using Pinecone.js
+			Pinecone.compile(pineScript).then(function(result) {
+				document.querySelector('#pine-output').innerHTML = '<pre>' + result + '</pre>';
+			}).catch(function(error) {
+				document.querySelector('#pine-output').innerHTML = '<pre>' + error.message + '</pre>';
+			});
+		});
+	</script>
+</body>
+</html>
